@@ -14,15 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(30)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\Doctor::create(['user_id' => 1])->save();
+        \App\Models\Doctor::create(['user_id' => 2])->save();
+        
+        for ($i = 3; $i <= 20; $i++) {
+            \App\Models\Patient::create(['user_id'=> $i, 'doctor_id' => 1])->save();
+        }
 
-        $this->call([
-            UserSeeder::class
-        ]);
+        for ($i = 21; $i <= 30; $i++) {
+            \App\Models\Patient::create(['user_id'=> $i, 'doctor_id' => 2])->save();
+        }
+
     }
 }

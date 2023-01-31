@@ -25,11 +25,11 @@ class LoginController extends Controller
         }
 
         $user = $request->user();
-
-        if ($user->is_doctor) {
+        if ($user->doctor()->exists()) {
             $token = $request->user()->createToken('user-access',['get-patients']);
             $data = [
                 'email' => $user->email,
+                'status' => 'DOCTOR',
                 'access_token' => $token->plainTextToken
             ];
 
@@ -39,6 +39,7 @@ class LoginController extends Controller
         $token = $request->user()->createToken('user-access', []);
         $data = [
             'email' => $user->email,
+            'status' => 'PATIENT',
             'access_token' => $token->plainTextToken
         ];
 

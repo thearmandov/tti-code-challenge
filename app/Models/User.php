@@ -33,12 +33,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function Doctor()
+    {
+        return $this->hasMany(Doctor::class, 'user_id');
+    }
+
+    public function Patient()
+    {
+        return $this->hasMany(Patient::class, 'user_id');
+    }
 }
