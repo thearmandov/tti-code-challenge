@@ -17,17 +17,17 @@ class PatientsController extends Controller
     public function getPatients()
     {
         $user = auth()->user();
-        dd($user);
+
+        // If user is not allowed to access patient data, then boot them out. 
         if (!$user->tokenCan('get-patients')) {
             abort(403, 'Unauthorized');
         }
-
-        
 
         $doctor = $user->Doctor()->first();
         $patients = $doctor->Patients;
 
         $patientData = [];
+        // Let's clean user data up a bit for patients.
         foreach($patients as $patient) {
             $userData = array(
                 'patient_id' => $patient->id,
